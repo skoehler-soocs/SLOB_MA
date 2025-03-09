@@ -1,0 +1,29 @@
+db_create_file_dest='/data'
+control_files=('/data/slob.dbf')
+
+db_name = SLOB
+
+compatible = 11.2.0.2
+
+undo_management=auto
+db_block_size = 8192
+db_files = 3000
+processes = 1000
+db_cache_size=20G
+shared_pool_size = 2139047040
+filesystemio_options=setall
+db_files=5000
+log_buffer=402653184
+pga_aggregate_target=1G
+parallel_max_servers=0
+resource_manager_plan=''
+remote_login_passwordfile=exclusive
+recyclebin = off
+_db_block_prefetch_limit=0
+_db_block_prefetch_quota=0
+_db_file_noncontig_mblock_read_count=0
+_disk_sector_size_override = TRUE
+_cursor_obsolete_threshold=130
+#_high_priority_processes=LGWR
+_high_priority_processes=LMS*|VKTM|LGWR
+

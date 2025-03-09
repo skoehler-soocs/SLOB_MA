@@ -1,0 +1,20 @@
+# Change the following 2 parameters to fit your system (e.g., file system or +ASM)
+db_create_file_dest = '/data'
+control_files=('/data/cntrlSLOB.dbf')
+
+db_name = SLOB
+
+UNDO_MANAGEMENT=AUTO
+db_block_size = 8192
+db_files = 300
+processes = 1000
+memory_max_target = 2G
+sga_target=1500M
+shared_pool_size = 1G
+filesystemio_options=setall
+recyclebin = off
+parallel_max_servers = 0
+cpu_count=1
+
+#_disk_sector_size_override = TRUE # needed for 4K redo blocksize
+

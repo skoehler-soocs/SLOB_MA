@@ -1,0 +1,38 @@
+
+#set the following to paths that make sense on your system:
+db_create_file_dest = '/data'
+control_files=('/data/cntrlSLOB.dbf')
+
+
+db_name = SLOB
+
+audit_trail='none'
+undo_management = auto
+db_block_size = 8192
+db_files = 200
+processes = 500
+shared_pool_size = 4G
+#cpu_count = 1          # You may have to unset this in order to force a very small buffer pool
+db_cache_size = 128M    # Will force maximum physical I/O
+#db_cache_size = 15G    # Sufficient for cached runs with reference scale (10,000 rows) and 128 sessions
+filesystemio_options = setall
+#parallel_max_servers = 0
+log_buffer = 134217728
+pga_aggregate_target = 1G
+remote_login_passwordfile = exclusive
+recyclebin = off
+
+# The following are needed to force db file sequential read. Omit for direct path short scans.
+# If you would like to investigate a blend of short scans mixed with single-block random I/O
+# then comment out these three parameters :
+_db_block_prefetch_limit = 0
+_db_block_prefetch_quota = 0
+_db_file_noncontig_mblock_read_count = 0
+
+# Uncomment the following if suffering library cache contention (at larger numbers of sessions) or high log file sync waits
+# at CPU-saturated levels.
+#_cursor_obsolete_threshold=130     
+#_high_priority_processes=LGWR
+
+# needed for 4K redo blocksize: 
+#_disk_sector_size_override = TRUE 

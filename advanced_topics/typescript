@@ -1,0 +1,115 @@
+Script started on Thu 02 May 2013 01:49:36 PM EDT
+]0;oracle@Delta3:~/SLOB[?1034h$ sh ./misc/boot.sh advanced.ora
+
+SQL*Plus: Release 11.2.0.3.0 Production on Thu May 2 13:49:54 2013
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.3.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> ORACLE instance started.
+
+Total System Global Area 2.4120E+10 bytes
+Fixed Size		    2239176 bytes
+Variable Size		 2348811576 bytes
+Database Buffers	 2.1475E+10 bytes
+Redo Buffers		  294047744 bytes
+Database mounted.
+Database opened.
+SQL> Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.3.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+]0;oracle@Delta3:~/SLOB$ 
+]0;oracle@Delta3:~/SLOB$ cat slob.conf
+
+UPDATE_PCT=20
+RUN_TIME=300
+WORK_LOOP=0
+SCALE=250000
+WORK_UNIT=256
+REDO_STRESS=HEAVY
+LOAD_PARALLEL_DEGREE=32
+SHARED_DATA_MODULUS=0
+
+# Settings for SQL*Net connectivity:
+#ADMIN_SQLNET_SERVICE=slob
+#SQLNET_SERVICE_BASE=slob
+#SQLNET_SERVICE_MAX=2
+#SYSDBA_PASSWD=change_on_install
+
+ADMIN_SQLNET_SERVICE=""
+SQLNET_SERVICE_BASE=""
+SQLNET_SERVICE_MAX=""
+SYSDBA_PASSWD=change_on_install
+export UPDATE_PCT RUN_TIME WORK_LOOP SCALE WORK_UNIT LOAD_PARALLEL_DEGREE REDO_STRESS SHARED_DATA_MODULUS
+
+
+]0;oracle@Delta3:~/SLOB$ sh ./runit.sh 128
+NOTIFY: 
+UPDATE_PCT == 20
+RUN_TIME == 300
+WORK_LOOP == 0
+SCALE == 250000
+WORK_UNIT == 256
+ADMIN_SQLNET_SERVICE == ""
+ADMIN_CONNECT_STRING == "/ as sysdba"
+NON_ADMIN_CONNECT_STRING == ""
+SQLNET_SERVICE_MAX == ""
+
+NOTIFY: Testing SYSDBA connectivity to the instance to validate slob.conf settings.
+NOTIFY: Testing non-SYSDBA connectivity to instance.
+NOTIFY: Connectivity varified.
+NOTIFY: Setting up trigger mechanism.
+NOTIFY: Connecting users 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 
+NOTIFY: Pausing for 21 seconds before triggering the test.
+
+NOTIFY: Triggering the test.
+Tm 303
+./runit.sh: line 218: 23657 Killed                  ( iostat -xm 3 > iostat.out )
+./runit.sh: line 218: 23658 Killed                  ( vmstat 3 > vmstat.out )
+./runit.sh: line 218: 23659 Killed                  ( mpstat -P ALL 3 > mpstat.out )
+]0;oracle@Delta3:~/SLOB$ 
+]0;oracle@Delta3:~/SLOB$ mv awr.txt awr.txt.128
+]0;oracle@Delta3:~/SLOB$ sh ./misc/awr_info.sh awr.txt.128
+FILE|SESSIONS|ELAPSED|EXECUTES|PREADS|READ_MBS|PWRITES|WRITE_MBS|REDO_MBS|DFSR_LAT|DPR_LAT|DFPR_LAT|DFPW_LAT|LFPW_LAT|TOP WAIT|
+awr.txt.128|128|304|370|71554|   559|28191|   329|108.2|   759|||   312|440653|db file sequential read 21628695 16407 1 42.6 User I/O|
+]0;oracle@Delta3:~/SLOB$ 
+]0;oracle@Delta3:~/SLOB$  ls -lt | head -8
+total 1024
+-rw-r--r--.   1 oracle dba  33266 May  2 13:59 awr_rac.html.gz
+-rw-r--r--.   1 oracle dba  45230 May  2 13:58 awr.html.gz
+-rw-r--r--.   1 oracle dba 165982 May  2 13:58 awr.txt.128
+-rw-r--r--.   1 oracle dba   2588 May  2 13:58 db_stats.out
+-rw-r--r--.   1 oracle dba  11399 May  2 13:58 vmstat.out
+-rw-r--r--.   1 oracle dba 345167 May  2 13:58 mpstat.out
+-rw-r--r--.   1 oracle dba  98530 May  2 13:58 iostat.out
+]0;oracle@Delta3:~/SLOB$ 
+]0;oracle@Delta3:~/SLOB$ sqlplus / as sysdba
+
+SQL*Plus: Release 11.2.0.3.0 Production on Thu May 2 14:01:18 2013
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.3.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+SQL> @misc/tsf
+
+Tablespace	  Used MB     Free MB	 Total MB  Pct. Free
+------------- ----------- ----------- ----------- ----------
+SYS_UNDOTS	   94,436      15,194	  109,630	  14
+SYSAUX		      167	   33	      200	  17
+IOPS		  256,563	3,261	  259,824	   1
+SYSTEM		      184      22,887	   23,071	  99
+
+SQL> exit
+Disconnected from Oracle Database 11g Enterprise Edition Release 11.2.0.3.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+]0;oracle@Delta3:~/SLOB$ exit
+exit
+
+Script done on Thu 02 May 2013 02:01:28 PM EDT

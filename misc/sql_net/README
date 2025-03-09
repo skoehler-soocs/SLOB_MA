@@ -1,0 +1,33 @@
+
+
+The tnsnames.ora in this directory offers an example of 
+service names that will allow the user to test RAC with 
+repeatable results. Connecting SLOB sessions to the round
+robin SCAN listener will result in SLOB sessions connecting
+to random RAC nodes. This is acceptable but not optimal and
+can result in varying run results due to slight variations
+in sessions per RAC node from one test to another.
+
+As of SLOB 2.5.3, runit.sh uses the SQLNET_SERVICE_BASE and 
+SQLNET_SERVICE_MAX slob.conf parameters to sequentially 
+affinity SLOB threads (Oracle sessions) to numbered service
+names. For example:
+
+	SQLNET_SERVICE_BASE=rac
+	SQLNET_SERVICE_MAX=8
+
+With these assigned values, runit.sh will connect the first
+SLOB thread to rac1 then rac2 and so forth until rac8 after
+which the connection rotor loops back to rac1. This manner
+of RAC affinity testing requires either a single SLOB
+schema (see SLOB Single Schema Model in the documentaion)
+or 8 SLOB schemas to align properly with the value assigned
+to SQLNET_SERVICE_MAX. The following command will connect
+32 SLOB threads (Oracle sessions) to each RAC node in an
+8-node RAC configuration given the tnsnames.ora example
+file in this directory:
+
+$ sh ./runit.sh -s 8 -t 32
+
+
+ 

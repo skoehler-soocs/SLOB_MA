@@ -1,0 +1,18 @@
+
+INTRO
+-----
+
+create_database_kit: A simple kit for a headstart on a simple database to test with SLOB.
+
+ts.sql: Reference SQL to create an IOPS tablespace.
+
+awr_info.sh: takes list of awr file names and produces pipe-delimited records of summary infomation. The
+             script ***presumes*** a naming convention of <free-text-no-white-spaces>.<number of SLOB sessions>
+
+statspack_info.sh is the statspack corollary to awr_info.sh.
+
+
+NOTE
+----
+For additional information on these scripts, please refer to the documentation under SLOB/doc
+and perform simple Google searches such as, "SLOB create_database_kit".

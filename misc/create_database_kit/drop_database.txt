@@ -1,0 +1,3 @@
+shutdown immediate;
+startup restrict mount PFILE=<>;
+drop database;

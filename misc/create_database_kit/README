@@ -1,0 +1,22 @@
+INTRO
+-----
+This is a kit to create a very simple database sufficient for testing SLOB.
+For simplicity sake it uses Oracle Managed Files in a directory of your choice. You can set
+db_create_file_dest in the create.ora file to any path you choose including an ASM +DG.
+
+WHAT TO CUSTOMIZE
+-----------------
+Edit create.ora and set the following parameters to a locale of your choosing:
+
+                db_create_file_dest = '/data'
+                control_files=('/data/cntrlSLOB.dbf')
+
+
+WHAT TO DO
+----------
+$ sqlplus '/ as sysdba' <<EOF
+@cr_db
+exit;
+EOF
+
+
