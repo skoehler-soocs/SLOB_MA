@@ -1,0 +1,31 @@
+-- Tested with Oracle 23ai (23.6.0.24.10)
+cd wait_kit
+make
+
+unset TWO_TASK
+export ORACLE_SID=FREE
+sqlplus / as sysdba
+create user c##slobdeploy identified by Emp_J__CQ5eDGa_Av__2_VkH__KF_t;
+grant dba to c##slobdeploy container=all;
+alter session set container=FREEPDB1;
+create tablespace SLOB datafile '/opt/oracle/oradata/FREE/FREEPDB1/slob01.db' SIZE 300M AUTOEXTEND OFF;
+
+vi slob.conf
+----------8<-----------
+RUN_TIME=120
+SCALE=100M
+DATABASE_STATISTICS_TYPE=awr
+ADMIN_SQLNET_SERVICE=FREEPDB1
+SQLNET_SERVICE_BASE=FREEPDB1
+DBA_PRIV_USER="c##slobdeploy"
+SYSDBA_PASSWD="Emp_J__CQ5eDGa_Av__2_VkH__KF_t"
+----------8<-----------
+
+./setup.sh SLOB 1
+
+vi slob.conf
+----------8<-----------
+ADMIN_SQLNET_SERVICE=FREE
+----------8<-----------
+
+./runit.sh 1

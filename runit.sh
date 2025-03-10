@@ -1328,7 +1328,8 @@ then
 		for U in 1 ${SCHEMAS} 
 		do
 
-			if ( ! f_test_conn "user${U}/user${U}${connect_string}" )
+			#if ( ! f_test_conn "user${U}/user${U}${connect_string}" )
+			if ( ! f_test_conn "user${U}/T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr${connect_string}" )
 			then
 				f_msg FATAL "Connect failure user${U}/user${U}${connect_string}."
 				f_msg FATAL "Please ensure:"
@@ -1345,7 +1346,8 @@ else
 	for U in 1 ${SCHEMAS} 
 	do
 
-		if ( !  f_test_conn "user${U}/user${U}${non_admin_connect_string}" )
+		#if ( !  f_test_conn "user${U}/user${U}${non_admin_connect_string}" )
+		if ( !  f_test_conn "user${U}/T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr${non_admin_connect_string}" )
 		then
 
 			f_msg FATAL "Connect failure user${U}/user${U}${non_admin_connect_string}."
@@ -1412,11 +1414,13 @@ do
 
 	if [ "$do_rotor" = "TRUE" ]
 	then
-		cmd="sqlplus -s user${cnt}/user${cnt}${non_admin_connect_string}${instance}"
+		#cmd="sqlplus -s user${cnt}/user${cnt}${non_admin_connect_string}${instance}"
+		cmd="sqlplus -s user${cnt}/T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr${non_admin_connect_string}${instance}"
 		(( instance = $instance + 1 ))
 		[[ "$instance" -gt "$SQLNET_SERVICE_MAX" ]] && instance=1
 	else
-		cmd="sqlplus -s user${cnt}/user${cnt}${non_admin_connect_string}"
+		#cmd="sqlplus -s user${cnt}/user${cnt}${non_admin_connect_string}"
+		cmd="sqlplus -s user${cnt}/T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr${non_admin_connect_string}"
 	fi
 
 	for ((i=0 ; i < $THREADS_PER_SCHEMA ; i++))
@@ -1424,7 +1428,8 @@ do
 
 		if [[ "$SCHEMAS" -eq 1 && "$do_rotor" = "TRUE" ]]
 		then
-			cmd="sqlplus -s user${cnt}/user${cnt}${non_admin_connect_string}${instance}"
+			#cmd="sqlplus -s user${cnt}/user${cnt}${non_admin_connect_string}${instance}"
+			cmd="sqlplus -s user${cnt}/T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr${non_admin_connect_string}${instance}"
 			(( instance = $instance + 1 ))
 			[[ "$instance" -gt "$SQLNET_SERVICE_MAX" ]] && instance=1
 		fi

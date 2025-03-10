@@ -498,6 +498,7 @@ return $ret
 function f_grant() {
 #global WORK_DIR
 local user="$1"
+local pass="T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr"
 local tablespace="$2"
 local constring="$3" 
 local ret=0
@@ -517,7 +518,7 @@ SET TERMOUT ON
 SET ECHO ON
 
 WHENEVER SQLERROR EXIT 2;
-GRANT CONNECT TO $user IDENTIFIED BY $user;
+GRANT CONNECT TO $user IDENTIFIED BY $pass;
 GRANT DBA TO $user;
 ALTER USER $user DEFAULT TABLESPACE $tablespace ;
 EXIT;
@@ -1448,7 +1449,8 @@ do
 	fi
 
 	USER=user$cnt
-	PASS=user$cnt
+	#PASS=user$cnt
+        PASS="T_ba_CZfq_EU_k_dn3J_VtP5j_w_Xr"
 
 	if [ "$cnt" -eq 1 ]
 	then
