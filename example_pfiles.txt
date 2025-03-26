@@ -1,0 +1,22 @@
+Single-Block I/O benchmark settings
+---------------------------------------------
+*._db_cache_pre_warm=FALSE
+*._db_file_noncontig_mblock_read_count=1
+*._serial_direct_read='ALWAYS'
+*.db_cache_size=10M
+*.shared_pool_size=2000M
+
+Multi-Block I/O benchmark settings
+---------------------------------------------
+*._db_cache_pre_warm=FALSE
+*._serial_direct_read='ALWAYS'
+*.db_cache_size=10M
+*.shared_pool_size=2000M
+
+Redo-Stress benchmark settings
+---------------------------------------------
+*._cache_pre_warm=FALSE
+*._db_file_noncontig_mblock_read_count=1
+*._serial_direct_read='ALWAYS'
+*.db_cache_size=45000M
+*.shared_pool_size=2000M
